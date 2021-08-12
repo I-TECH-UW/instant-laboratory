@@ -23,7 +23,7 @@ services:
     ports:
         - "9000:80"
     volumes:
-      - ./importer/volume/default.json:/usr/share/nginx/html/config/default.json
+      - /instant/instant-laboratory/core/docker/importer/volume/default.json:/usr/share/nginx/html/config/default.json
 
   fhir:
     container_name: hapi-fhir
