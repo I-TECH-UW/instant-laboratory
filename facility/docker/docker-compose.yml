@@ -5,7 +5,7 @@ services:
     container_name: mongo-gofr
     image: mongo:3.6
     ports:
-      - "27017:27017"
+      - "27018:27017"
     restart: always
 
   redis:
@@ -24,7 +24,7 @@ services:
       - authentication__type=disabled
       # - idGenerator=uuidv4 <- setting from jembi/health, is untested
     ports:
-      - "3447:3447"
+      - "3448:3447"
     restart: always
 
   facility-recon:

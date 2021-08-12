@@ -10,7 +10,7 @@ services:
       - api_authenticationTypes=["token", "basic"]
       - authentication_enableCustomTokenAuthentication=true
     ports:
-      - "8080:8080"
+      - "8085:8080"
       - "5000:5000"
       - "5001:5001"
       - "5050:5050"
@@ -22,6 +22,8 @@ services:
     image: jembi/openhim-console:1.14
     ports:
         - "9000:80"
+    volumes:
+      - ./importer/volume/default.json:/usr/share/nginx/html/config/default.json
 
   fhir:
     container_name: hapi-fhir
