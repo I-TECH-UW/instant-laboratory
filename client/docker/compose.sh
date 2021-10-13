@@ -8,19 +8,19 @@ if [ "$1" == "init" ]; then
     docker cp "$composeFilePath"/importer/volume/. opencr-helper:/config/
     docker rm opencr-helper
 
-    docker-compose -f "$composeFilePath"/docker-compose.yml -f "$composeFilePath"/importer/docker-compose.config.yml up -d
+    docker-compose -p instant -f "$composeFilePath"/docker-compose.yml -f "$composeFilePath"/importer/docker-compose.config.yml up -d
 
 elif [ "$1" == "up" ]; then
 
-    docker-compose -f "$composeFilePath"/docker-compose.yml up -d
+    docker-compose -p instant -f "$composeFilePath"/docker-compose.yml up -d
 
 elif [ "$1" == "down" ]; then
 
-    docker-compose  -f "$composeFilePath"/docker-compose.yml -f "$composeFilePath"/importer/docker-compose.config.yml stop
+    docker-compose -p instant -f "$composeFilePath"/docker-compose.yml -f "$composeFilePath"/importer/docker-compose.config.yml stop
 
 elif [ "$1" == "destroy" ]; then
 
-    docker-compose -f "$composeFilePath"/docker-compose.yml -f "$composeFilePath"/importer/docker-compose.config.yml down -v
+    docker-compose -p instant -f "$composeFilePath"/docker-compose.yml -f "$composeFilePath"/importer/docker-compose.config.yml down -v
 
     docker volume rm opencr-data instant_elasticsearch-data
 
