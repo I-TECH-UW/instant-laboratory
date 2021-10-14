@@ -13,7 +13,8 @@ if [ "$1" == "init" ]; then
     docker rm openelis-plugins-helper
 
     docker create --name openelisglobal-webapp-helper -v openelis-server-data:/tomcat busybox
-    docker cp "$composeFilePath"/importer/volume/tomcat/oe_server.xml openelisglobal-webapp-helper:/tomcat/server.xml
+    chmod -R a+rwx "$composeFilePath"/importer/volume/tomcat/openelis/conf/
+    docker cp "$composeFilePath"/importer/volume/tomcat/openelis/conf/. openelisglobal-webapp-helper:/tomcat/
     docker rm openelisglobal-webapp-helper
 
     docker create --name openelisglobal-properties-helper -v openelis-properties-data:/properties busybox
@@ -21,10 +22,11 @@ if [ "$1" == "init" ]; then
     docker rm openelisglobal-properties-helper
 
     docker create --name external-fhir-api-helper -v openelis-fhir-data:/tomcat busybox
-    docker cp "$composeFilePath"/importer/volume/tomcat/hapi_server.xml external-fhir-api-helper:/tomcat/server.xml
+    chmod -R a+rwx "$composeFilePath"/importer/volume/tomcat/fhir_server/conf/
+    docker cp "$composeFilePath"/importer/volume/tomcat/fhir_server/conf/. external-fhir-api-helper:/tomcat/ 
     docker rm external-fhir-api-helper
 
-    docker-compose -f "$composeFilePath"/docker-compose.yml up 
+    docker-compose -p instant -f "$composeFilePath"/docker-compose.yml up -d
 
 elif [ "$1" == "up" ]; then
     docker-compose -p instant -f "$composeFilePath"/docker-compose.yml up -d

@@ -21,8 +21,6 @@ services:
             -  POSTGRES_PASSWORD=admin
             -  POSTGRES_DB=clinlims
             -  POSTGRES_INITDB_ARGS="--auth-host=md5"
-        # env_file:
-        #      - /home/moses/Desktop/U-WASH-PROJ/TICKETS/INSTANT-OPENHIE-PROJECT/labPackage/instant/lab/docker/importer/volume/database/database.env
         volumes:
               # preserves the database between containers
              - db-data:/var/lib/postgresql/data                
@@ -43,10 +41,6 @@ services:
             - "8095:8080"
             - "8443:8443"
         restart: always
-        networks:
-          default:
-              ipv4_address: 172.20.1.5
-
 
         restart: always
         environment:
@@ -56,18 +50,16 @@ services:
         volumes:
             -  cert-volume:/etc/openelis-global
             -  openelis-plugins-data:/var/lib/openelis-global/plugins
-            -  openelis-server-data:/usr/local/tomcat/conf/
-            -  openelis-properties-data:/run/secrets/
-   - source: common.properties
-            
+            -  openelis-server-data:/usr/local/tomcat/conf
+            -  openelis-properties-data:/run/secrets
+           
     fhir.openelis.org:
         container_name: external-fhir-api
         image: hapiproject/hapi:v5.4.0
         ports:
             - "8081:8080"
             - "8444:8443"
-        networks:
-            - default
+
         restart: always
         environment:
           TZ: Africa/Nairobi
@@ -77,8 +69,7 @@ services:
                       -Djavax.net.ssl.trustStoreType=pkcs12 
                       -Djavax.net.ssl.keyStore=/etc/openelis-global/keystore 
                       -Djavax.net.ssl.keyStorePassword=kspass 
-                      -Djavax.net.ssl.keyStoreType=pkcs12"            
-        
+                      -Djavax.net.ssl.keyStoreType=pkcs12"                 
         volumes:
             -  cert-volume:/etc/openelis-global
             -  openelis-fhir-data:/usr/local/tomcat/conf/
@@ -97,11 +88,5 @@ volumes:
   openelis-properties-data:   
      external: true
 
-networks:
-  default:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.1.0/24     
-       
+  
     
