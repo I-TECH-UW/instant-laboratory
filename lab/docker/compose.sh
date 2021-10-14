@@ -16,12 +16,13 @@ if [ "$1" == "init" ]; then
     docker cp "$composeFilePath"/importer/volume/tomcat/oe_server.xml openelisglobal-webapp-helper:/tomcat/server.xml
     docker rm openelisglobal-webapp-helper
 
+    docker create --name openelisglobal-properties-helper -v openelis-properties-data:/properties busybox
+    docker cp "$composeFilePath"/importer/volume/properties/common.properties openelisglobal-properties-helper:/properties/common.properties
+    docker rm openelisglobal-properties-helper
+
     docker create --name external-fhir-api-helper -v openelis-fhir-data:/tomcat busybox
     docker cp "$composeFilePath"/importer/volume/tomcat/hapi_server.xml external-fhir-api-helper:/tomcat/server.xml
     docker rm external-fhir-api-helper
-
-    # docker secret create  datasource.password "$composeFilePath"/importer/volume/properties/datasource.password
-    # docker secret create  common.properties "$composeFilePath"/importer/volume/properties/common.properties
 
     docker-compose -f "$composeFilePath"/docker-compose.yml up 
 

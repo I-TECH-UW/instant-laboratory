@@ -1,4 +1,5 @@
-# EMR
+# Laboratory
 
-This folder is a placeholder for experimenting with EMRs in Instant OpenHIE. The docker-compose file is copied from the instructions at: https://wiki.openmrs.org/display/docs/Installing+OpenMRS+on+Docker
+This folder is a placeholder for experimenting with the Laboratory System in Instant OpenHIE. 
+see more http://docs.openelis-global.org/en/latest/
 
