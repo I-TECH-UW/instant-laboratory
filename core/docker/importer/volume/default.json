@@ -2,7 +2,7 @@
     "version": "1.10.0",
     "minimumCoreVersion": "3.4.0",
     "protocol": "https",
-    "host": "localhost",
+    "host": "testapi.openelisci.org",
     "port": 8080,
     "title": "Admin Console",
     "footerTitle": "OpenHIM Administration Console",
