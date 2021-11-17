@@ -39,7 +39,7 @@ services:
             - database
         ports:
             - "8095:8080"
-            - "8443:8443"
+            - "8445:8443"
         restart: always
         environment:
             - TZ=Africa/Nairobi
