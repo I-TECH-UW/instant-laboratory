@@ -11,7 +11,7 @@ services:
             - cert-volume:/etc/openelis-global
           
     database:
-        container_name: openelisglobal-database 
+        container_name: openelisglobal-database-instant 
         image: postgres:9.5
         ports:
             - "15432:5432"
@@ -52,7 +52,7 @@ services:
             -  openelis-properties-data:/run/secrets
            
     fhir.openelis.org:
-        container_name: external-fhir-api
+        container_name: external-fhir-api-instant
         image: hapiproject/hapi:v5.4.0
         ports:
             - "8081:8080"
