@@ -38,7 +38,7 @@ services:
         depends_on:
             - database
         ports:
-            - "8095:8080"
+            - "8097:8080"
             - "8445:8443"
         restart: always
         environment:
