@@ -26,6 +26,15 @@ services:
       - openhim-core
     volumes:
        - 'openhim-console-config:/usr/share/nginx/html/config' 
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=hie-botswana_hie'
+      - 'traefik.http.routers.openhim-console.rule=PathPrefix(`/openhim/`)'
+      - 'traefik.http.routers.openhim-console.tls=true'
+      - 'traefik.http.routers.openhim-console.tls.certresolver=myresolver'
+      - 'traefik.http.routers.openhim-console.entrypoints=https'
+      - 'traefik.http.routers.openhim-console.middlewares=openhim-console-stripprefix'
+      - 'traefik.http.middlewares.openhim-console-stripprefix.stripprefix.prefixes=/openhim'
 
   hapi-fhir:
     container_name: hapi-fhir

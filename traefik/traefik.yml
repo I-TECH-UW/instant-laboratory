@@ -1,0 +1,35 @@
+debug: true
+logLevel: DEBUG
+api:
+  insecure: true
+defaultEntryPoints:
+  - https
+  - http
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entrypoint:
+          to: https
+          scheme: https
+  https:
+    address: :443
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    watch: true
+    exposedByDefault: false
+  # file:
+  #   directory:  "/conf/"
+  #   watch: true  
+
+certificatesResolvers:
+  myresolver:
+    acme:
+      email: pmanko@uw.edu
+      storage: acme.json
+      httpChallenge:
+        # used during the challenge
+        entryPoint: web

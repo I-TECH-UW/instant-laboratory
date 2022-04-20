@@ -51,6 +51,18 @@ services:
     ports:
       - "4000:4000"
     restart: always
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=instant_default'
+      - 'traefik.http.routers.gofr.rule=Host(`instant.openelis-global.org`) && PathPrefix(`/gofr`)'
+      - 'traefik.http.routers.gofr.tls=true'
+      - 'traefik.http.routers.gofr.tls.certresolver=myresolver'
+      - 'traefik.http.routers.gofr.entrypoints=https'
+      - 'traefik.http.services.gofr.loadbalancer.server.port=4000'
+      - 'traefik.http.services.gofr.loadbalancer.server.scheme=https'
+      - 'traefik.http.routers.gofr.service=gofr'
+      - 'traefik.http.routers.gofr.middlewares=gofr-stripprefix'
+      - 'traefik.http.middlewares.gofr-stripprefix.stripprefix.prefixes=/gofr'
 
 # join core network
 # networks:

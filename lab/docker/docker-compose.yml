@@ -50,7 +50,18 @@ services:
             # -  openelis-plugins-data:/var/lib/openelis-global/plugins
             -  openelis-server-data:/usr/local/tomcat/conf
             -  openelis-properties-data:/run/secrets
-           
+        labels:
+            - 'traefik.enable=true'
+            - 'traefik.docker.network=instant_default'
+            - 'traefik.http.routers.oe.rule=Host(`instant.openelis-global.org`) && PathPrefix(`/openelis`)'
+            - 'traefik.http.routers.oe.tls=true'
+            - 'traefik.http.routers.oe.tls.certresolver=myresolver'
+            - 'traefik.http.routers.oe.entrypoints=https'
+            - 'traefik.http.services.oe.loadbalancer.server.port=8443'
+            - 'traefik.http.services.oe.loadbalancer.server.scheme=https'
+            - 'traefik.http.routers.oe.service=oe'  
+            - 'traefik.http.routers.oe.middlewares=oe-stripprefix'
+            - 'traefik.http.middlewares.oe-stripprefix.stripprefix.prefixes=/openelis'      
     fhir.openelis.org:
         container_name: external-fhir-api
         image: hapiproject/hapi:v5.5.1

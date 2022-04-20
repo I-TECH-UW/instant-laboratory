@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3.8'
  
 services:
   openmrs-referenceapplication-mysql:
@@ -40,7 +40,18 @@ services:
       - openmrs-modules:/usr/local/tomcat/.OpenMRS/modules/ # do not store modules in data
       - openmrs-owa:/usr/local/tomcat/.OpenMRS/owa/ # do not store owa in data
       - openmrs-ssl:/ssl/  #SSL certs for the EMR-LIS comunication
- 
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=instant_default'
+      - 'traefik.http.routers.openmrs.rule=Host(`instant.openelis-global.org`) && PathPrefix(`/openmrs`)'
+      - 'traefik.http.routers.openmrs.tls=true'
+      - 'traefik.http.routers.openmrs.tls.certresolver=myresolver'
+      - 'traefik.http.routers.openmrs.entrypoints=https'
+      - 'traefik.http.services.openmrs.loadbalancer.server.port=8080'
+      - 'traefik.http.services.openmrs.loadbalancer.server.scheme=https'
+      - 'traefik.http.routers.openmrs.service=openmrs'
+    container_name: openmrs
+
 volumes:
    openmrs-referenceapplication-mysql-data:
    openmrs-referenceapplication-data:

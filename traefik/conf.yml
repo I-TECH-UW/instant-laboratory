@@ -1,0 +1,11 @@
+tls:
+  certificates:
+    - certFile: "/etc/certs/cert.crt"
+      keyfile: "/etc/certs/cert.key"
+      stores:
+        - default
+  stores:
+    default:
+      defaultCertificate:
+        certFile: "/etc/certs/cert.crt" 
+        keyFile: "/etc/certs/cert.key"
